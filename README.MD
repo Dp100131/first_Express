@@ -52,3 +52,11 @@ app.listen(port, () => {
 ```
 # Routing
 
+# API RESTful
+
+### REST: Representational State Transfer
+
+- GET: Obtener data.
+- PUT: Actualizar.
+- POST: Crear.
+- DELETE: ELiminar.
