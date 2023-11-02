@@ -60,3 +60,27 @@ app.listen(port, () => {
 - PUT: Actualizar.
 - POST: Crear.
 - DELETE: ELiminar.
+
+## Query params
+api.example.com/products
+api.example.com/products?page=1
+api.example.com/products?limit=10&offset=0
+api.example.com/products?region=USA
+api.example.com/products?region=USA&brand=XYZ
+
+# fake data
+```
+npm i @faker-js/faker
+```
+
+# Router
+
+```
+const express = require("express");
+const { faker } = require("@faker-js/faker");
+
+const router = express.Router();
+
+router.get('/', (req, res) => {})
+```
+# Post

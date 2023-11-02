@@ -10,6 +10,7 @@ app.listen(port, () =>{
   console.log("My port: " + port);
 }); */
 const express = require("express");
+const routerApi = require("./Routes");
 const app = express();
 const port ='3000'
 app.set('PORT', port)
@@ -22,12 +23,7 @@ app.get('/nueva-ruta', (req, res) => {
   res.send('<h1>Hello world from nuevo endpoint.</h1>');
 });
 
-app.get('/products', (req, res) => {
-  res.json({
-    status: 200,
-    body: 'Ok'
-  });
-});
+routerApi(app);
 
 app.listen(port, () => {
   console.log(`My port ${port}.`)
