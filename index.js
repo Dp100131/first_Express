@@ -1,3 +1,4 @@
+const cors = require("cors");
 const express = require("express");
 const routerApi = require("./Routes");
 const { logErrors, errorHandler, boomErrorHandler} = require("./Middlewares/error.handler");
@@ -6,6 +7,7 @@ const port ='3000'
 app.set('PORT', port)
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello world from express.</h1>');
