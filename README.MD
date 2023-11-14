@@ -114,3 +114,8 @@ Para el manejo de errores
 ```
 npm i @hapi/boom
 ```
+# Joi
+Validación de datos
+```
+npm i joi
+```
