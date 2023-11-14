@@ -83,4 +83,34 @@ const router = express.Router();
 
 router.get('/', (req, res) => {})
 ```
-# Post
+# POST
+Add middleware
+```
+app.use(express.json());
+```
+# Patch and PUT
+PUT actualizar todos los campos.
+Pacth actualizar algún campo del producto.
+
+# Delete
+Solo necesito el id para eliminar el elemento.
+
+# HTTP response status codes
+- 100 - 199: Informational
+- 200 - 299: Successful responses
+- 300 - 399: Redirects
+- 400 - 499: Client errors
+- 500 - 599: Server errors
+[status codes](https://http.cat/)
+
+# Middlewares
+request -> Middleware -> Middleware -> Middleware -> Response
+request -> Middleware -> Middleware /->
+
+Se depen poner del routing
+
+# Boom
+Para el manejo de errores
+```
+npm i @hapi/boom
+```
