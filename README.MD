@@ -181,3 +181,5 @@ npm install pg
 #
 Conexiones tipo Client y de tipo pool.
 COn el pool no debe estar autentificando siempre.
+
+# Variables de entorno:

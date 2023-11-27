@@ -1,12 +1,11 @@
 const { Pool } = require("pg");
 
- 
-const pool = new Pool({
-  host: 'bubble.db.elephantsql.com',
-  port: 5432,
-  user: 'kxyohfga',
-  password:'MDhnOa_p6EQF7J4D3UPgFlb9N-Vwh6HK',
-  database:'kxyohfga' 
-}); 
+const { config } = require('../config/config')
+
+const USER = encodeURIComponent(config.dbUser);
+const PASSWORD = encodeURIComponent(config.dbPassword);
+const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
+
+const pool = new Pool({ connectionString: URI});
 
 module.exports = pool;
