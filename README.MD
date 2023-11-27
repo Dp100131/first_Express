@@ -126,4 +126,58 @@ Ver más a fondo el tema de la whitelist.
 ```
 npm i cors
 ```
+# Bases de datos
 
+## Docker
+- Correr:
+```
+docker-compose up -d postgres
+```
+- Ver los servicios activos:
+```
+docker-compose ps
+```
+- Kill service:
+```
+docker-compose down
+```
+# Containers:
+Caracteristicas:
+stateless.
+para persistir hay que agrearle un volumen.
+```
+volumes:
+  - ./postgres_data:/var/lib/postgresql/data
+```
+para otras DB revisar: hub.docker.com
+# Conectar vía terminal
+```
+docker-compose exec postgres bash
+```
+```
+psql -h localhost -d my_store -U daniel
+```
+Para salir de base de datos:
+```
+\q
+```
+Para salir del contenedor:
+```
+exit
+```
+# Correr pgadmin
+```
+docker-compose up -d pgadmin
+```
+Más info:
+```
+docker ps // obtener el id de los contenedores
+docker inspect ID_DEL_CONTAINER
+```
+# Integración de node con postgres
+```
+npm install pg
+```
+#
+Conexiones tipo Client y de tipo pool.
+COn el pool no debe estar autentificando siempre.

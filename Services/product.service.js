@@ -1,11 +1,15 @@
 const { faker } = require("@faker-js/faker");
 const boom = require("@hapi/boom");
 
+const pool = require('../libs/postgres');
+
 class ProductsService{
 
   constructor(){
     this.products = [];
     this.generete();
+    this.pool = pool;
+    this.pool.on('error', (err) => console.error(err))
   }
 
   generete(){
@@ -13,10 +17,10 @@ class ProductsService{
     for (let index = 0; index < limit; index++) {
 
       this.products.push({
-        id: faker.datatype.uuid(),
+        id: faker.string.uuid(),
         name: faker.commerce.productName(),
         price: parseInt(faker.commerce.price(), 10),
-        image: faker.image.imageUrl(),
+        image: faker.image.url(),
         isBlock: faker.datatype.boolean()
       });
 
@@ -33,11 +37,9 @@ class ProductsService{
     return newProduct;
   }
   async find(){
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(this.products);
-      }, 200);
-    });
+    const query = 'SELECT * FROM academico.persona'
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
   async findOne(id){
     const product =  this.products.find( data => data.id == id);
