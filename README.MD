@@ -183,3 +183,20 @@ Conexiones tipo Client y de tipo pool.
 COn el pool no debe estar autentificando siempre.
 
 # Variables de entorno:
+```
+npm i dotenv
+```
+# ADD ORM (Object Relational Mapping)
+Sequelize
+```
+npm install --save sequelize
+npm install --save pg pg-hstore # Postgres
+```
+Sequalize devuelve un array:
+```
+[data, metadata]
+```
+# Para migraciones
+```
+npm i sequelize-cli --save-dev
+```
