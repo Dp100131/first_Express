@@ -200,3 +200,7 @@ Sequalize devuelve un array:
 ```
 npm i sequelize-cli --save-dev
 ```
+# Relaciones 1:1
+A -> B
+HasOne -> B
+BelonsTo -> A
