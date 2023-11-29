@@ -204,3 +204,6 @@ npm i sequelize-cli --save-dev
 A -> B
 HasOne -> B
 BelonsTo -> A
+
+# Relaciones 1:N
+hasMany -> A

@@ -1,73 +1,73 @@
-const express = require('express');
+const faker = require('faker');
+const boom = require('@hapi/boom');
 
-const ProductsService = require('./../Services/product.service');
-const validatorHandler = require('./../Middlewares/validator.handler');
-const { createProductSchema, updateProductSchema, getProductSchema } = require('./../schemas/product.schema');
+const { models } = require('../libs/sequelize');
 
-const router = express.Router();
-const service = new ProductsService();
+class ProductsService {
 
-router.get('/', async (req, res, next) => {
-  try {
-    const products = await service.find();
-    res.json(products);
-  } catch (error) {
-    next(error);
+  constructor(){
+    this.products = [];
+    this.generate();
   }
-});
 
-router.get('/:id',
-  validatorHandler(getProductSchema, 'params'),
-  async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const product = await service.findOne(id);
-      res.json(product);
-    } catch (error) {
-      next(error);
+  generate() {
+    const limit = 100;
+    for (let index = 0; index < limit; index++) {
+      this.products.push({
+        id: faker.datatype.uuid(),
+        name: faker.commerce.productName(),
+        price: parseInt(faker.commerce.price(), 10),
+        image: faker.image.imageUrl(),
+        isBlock: faker.datatype.boolean(),
+      });
     }
   }
-);
 
-router.post('/',
-  validatorHandler(createProductSchema, 'body'),
-  async (req, res, next) => {
-    try {
-      const body = req.body;
-      const newProduct = await service.create(body);
-      res.status(201).json(newProduct);
-    } catch (error) {
-      next(error);
-    }
+  async create(data) {
+    const newProduct = await models.Product.create(data);
+    return newProduct;
   }
-);
 
-router.patch('/:id',
-  validatorHandler(getProductSchema, 'params'),
-  validatorHandler(updateProductSchema, 'body'),
-  async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const body = req.body;
-      const product = await service.update(id, body);
-      res.json(product);
-    } catch (error) {
-      next(error);
-    }
+  async find() {
+    const products = await models.Product.findAll({
+      include: ['category']
+    });
+    return products;
   }
-);
 
-router.delete('/:id',
-  validatorHandler(getProductSchema, 'params'),
-  async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      await service.delete(id);
-      res.status(201).json({id});
-    } catch (error) {
-      next(error);
+  async findOne(id) {
+    const product = this.products.find(item => item.id === id);
+    if (!product) {
+      throw boom.notFound('product not found');
     }
+    if (product.isBlock) {
+      throw boom.conflict('product is block');
+    }
+    return product;
   }
-);
 
-module.exports = router;
+  async update(id, changes) {
+    const index = this.products.findIndex(item => item.id === id);
+    if (index === -1) {
+      throw boom.notFound('product not found');
+    }
+    const product = this.products[index];
+    this.products[index] = {
+      ...product,
+      ...changes
+    };
+    return this.products[index];
+  }
+
+  async delete(id) {
+    const index = this.products.findIndex(item => item.id === id);
+    if (index === -1) {
+      throw boom.notFound('product not found');
+    }
+    this.products.splice(index, 1);
+    return { id };
+  }
+
+}
+
+module.exports = ProductsService;
